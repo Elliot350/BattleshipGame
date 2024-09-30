@@ -7,7 +7,7 @@ import java.util.List;
 
 public class ShipPlacementIndicator {
 
-    private final Grid mask;
+    private final Grid<?> mask;
     private final int length;
     private final List<PlacementIndicatorSquare> squares;
     private final PlacementIndicatorArrow arrow;
@@ -15,7 +15,7 @@ public class ShipPlacementIndicator {
     private Direction direction;
     private Pane parent;
 
-    public ShipPlacementIndicator(Pane parent, Grid mask, int length, ShipPlacer.PlacementMode placementMode) {
+    public ShipPlacementIndicator(Pane parent, Grid<?> mask, int length, ShipPlacer.PlacementMode placementMode) {
         this.mask = mask;
         this.length = length;
         this.parent = parent;

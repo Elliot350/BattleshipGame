@@ -79,62 +79,18 @@ public class BattleshipPlayer extends Pane {
     }
 
     public boolean isHit(int col, int row) {
-        return playerBoard.shipSegments.containsSomething(col, row);
+        return playerBoard.getShipSegments().containsSomething(col, row);
     }
 
-    public boolean receiveShot(int col, int row) {
-        if (playerBoard.shipSegments.containsSomething(col, row)) {
-            if (playerBoard.shipSegments.get(col, row) instanceof ShipSegment segment) {
-                segment.getShot();
-                System.out.println(segment + " at " + col + ", " + row + " was shot");
-            }
-            return true;
+    public void receiveShot(int col, int row) {
+        if (playerBoard.getShipSegments().containsSomething(col, row)) {
+            ShipSegment segment = playerBoard.getShipSegments().get(col, row);
+            segment.getShot();
+            System.out.println(segment + " at " + col + ", " + row + " was shot");
         } else {
             System.out.println(col + ", " + row + " was a miss");
-            return false;
         }
     }
-
-    // TODO: Yay or nay?
-//    public GameAction takeTurnAction() {
-//        BattleshipPlayer tmp = this;
-//        return new SimpleAction(() -> {
-//            ActionManager.addImmediateGameActions(
-//                    new AimAction(tmp),
-//                    new SwitchPlayerAction(gameDisplay, tmp.getOpponent()),
-//                    tmp.getOpponent().takeTurnAction()
-//            );
-//        });
-//    }
-
-//    public GameAction registerHitAction(int col, int row) {
-//        BattleshipPlayer tmp = this;
-//        return new SimpleAction(() -> {
-//            boolean hit = tmp.receiveShot(col, row);
-//            if (hit) tmp.getOpponent().getEnemyBoard().placeHit(col, row);
-//            else tmp.getOpponent().getEnemyBoard().placeMiss(col, row);
-//        }, 100);
-//    }
-
-//    public GameAction takeAimAction() {
-//        BattleshipPlayer tmp = this;
-//        return new GameAction() {
-//
-//            public void takeShot(int col, int row) {
-//                ActionManager.addImmediateGameActions(
-//                        new MissileAnimation(tmp, col, row),
-//                        new RegisterHit(tmp.getOpponent(), col, row)
-//                );
-//                finishAction(100);
-//            }
-//
-//            @Override
-//            public void perform() {
-//                tmp.enemyBoard.startTargeting();
-//            }
-//        };
-//    }
-
 
     @Override
     public String toString() {

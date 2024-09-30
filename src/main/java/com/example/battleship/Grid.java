@@ -1,32 +1,30 @@
 package com.example.battleship;
 
-import java.util.ArrayList;
-import java.util.List;
-
-// TODO: Do I add generics in the class or not?
-public class Grid {
+public class Grid<T extends GridItem> {
 
     private final GridItem[][] items;
+    private final Class<T> tClass;
 
-    public Grid(int cols, int rows) {
+    public Grid(int cols, int rows, Class<T> tClass) {
         items = new GridItem[cols][rows];
+        this.tClass = tClass;
     }
 
-    public GridItem set(int col, int row, GridItem item) {
+    public T set(int col, int row, T item) {
         return set(col, row, item, false);
     }
 
-    public GridItem set(int col, int row, GridItem item, boolean move) {
+    public T set(int col, int row, T item, boolean moveItem) {
         if (outsideGrid(col, row)) return null;
         GridItem overwrittenItem = items[col][row];
         items[col][row] = item;
-        if (move) item.moveToGridPosition(col, row);
-        return overwrittenItem;
+        if (moveItem) item.moveToGridPosition(col, row);
+        return tClass.cast(overwrittenItem);
     }
 
-    public GridItem get(int col, int row) {
+    public T get(int col, int row) {
         if (outsideGrid(col, row)) return null;
-        return items[col][row];
+        return tClass.cast(items[col][row]);
     }
 
     public boolean containsSomething(int col, int row) {

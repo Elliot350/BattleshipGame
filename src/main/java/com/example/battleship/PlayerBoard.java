@@ -1,6 +1,7 @@
 package com.example.battleship;
 
 import com.example.battleship.ship.Ship;
+import com.example.battleship.ship.ShipSegment;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -10,10 +11,10 @@ import java.util.List;
 
 public class PlayerBoard extends Board {
 
-    Grid background;
-    Grid shipSegments;
-    private List<CellClicked> actions;
-    private List<CellClicked> toRemove;
+    private Grid<BoardSquare> background;
+    private final Grid<ShipSegment> shipSegments;
+    private final List<CellClicked> actions;
+    private final List<CellClicked> toRemove;
 
     public PlayerBoard() {
         actions = new ArrayList<>();
@@ -22,8 +23,8 @@ public class PlayerBoard extends Board {
         Rectangle backgroundRect = new Rectangle(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH, backgroundColour);
         getChildren().add(backgroundRect);
 
-        background = new Grid(BattleshipGame.BOARD_WIDTH, BattleshipGame.BOARD_WIDTH);
-        shipSegments = new Grid(BattleshipGame.BOARD_WIDTH, BattleshipGame.BOARD_WIDTH);
+        background = new Grid<>(BattleshipGame.BOARD_WIDTH, BattleshipGame.BOARD_WIDTH, BoardSquare.class);
+        shipSegments = new Grid<>(BattleshipGame.BOARD_WIDTH, BattleshipGame.BOARD_WIDTH, ShipSegment.class);
 
         for (int i = 0; i < BattleshipGame.BOARD_WIDTH; i++) {
             for (int j = 0; j < BattleshipGame.BOARD_WIDTH; j++) {
@@ -96,6 +97,10 @@ public class PlayerBoard extends Board {
         }
         actions.removeAll(toRemove);
         toRemove.clear();
+    }
+
+    public Grid<ShipSegment> getShipSegments() {
+        return shipSegments;
     }
 
     public void addCellClicked(CellClicked cellClicked) {

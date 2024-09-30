@@ -305,7 +305,7 @@ public class ShipPlacer extends VBox {
             this.entry = entry;
             direction = DEFAULT_SHIP_DIRECTION;
             length = entry.getLength();
-            placementIndicator = new ShipPlacementIndicator(board, board.shipSegments, length, placementMode);
+            placementIndicator = new ShipPlacementIndicator(board, board.getShipSegments(), length, placementMode);
             placementIndicator.setVisible(false);
         }
 
