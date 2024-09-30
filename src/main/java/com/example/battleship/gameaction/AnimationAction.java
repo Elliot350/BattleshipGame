@@ -23,4 +23,9 @@ public class AnimationAction extends GameAction {
         timeline.play();
         finishAction(length);
     }
+
+    @Override
+    public String toString() {
+        return "Animation";
+    }
 }

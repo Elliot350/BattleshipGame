@@ -6,6 +6,7 @@ public class SetupPlayerAction extends PlayerGameAction {
 
     public SetupPlayerAction(BattleshipPlayer player) {
         super(player);
+        waitTime = 1000;
     }
 
     @Override
@@ -14,6 +15,11 @@ public class SetupPlayerAction extends PlayerGameAction {
     }
 
     public void donePlacingShips() {
-        finishAction(1000);
+        startSubActions();
+    }
+
+    @Override
+    public String toString() {
+        return "Setup " + player;
     }
 }

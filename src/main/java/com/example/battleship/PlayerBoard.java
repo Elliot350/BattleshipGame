@@ -3,6 +3,7 @@ package com.example.battleship;
 import com.example.battleship.ship.Ship;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +18,9 @@ public class PlayerBoard extends Board {
     public PlayerBoard() {
         actions = new ArrayList<>();
         toRemove = new ArrayList<>();
+
+        Rectangle backgroundRect = new Rectangle(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH, backgroundColour);
+        getChildren().add(backgroundRect);
 
         background = new Grid(BattleshipGame.BOARD_WIDTH, BattleshipGame.BOARD_WIDTH);
         shipSegments = new Grid(BattleshipGame.BOARD_WIDTH, BattleshipGame.BOARD_WIDTH);

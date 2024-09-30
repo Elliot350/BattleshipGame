@@ -2,11 +2,10 @@ package com.example.battleship.gameaction;
 
 public class SimpleAction extends GameAction {
 
-    private final double waitTime;
     private final Runnable perform;
 
     public SimpleAction(Runnable runnable) {
-        this(runnable, -1);
+        this(runnable, 0);
     }
 
     public SimpleAction(Runnable runnable, double waitTime) {
@@ -15,9 +14,14 @@ public class SimpleAction extends GameAction {
     }
 
     @Override
-    public void perform() {
+    protected void perform() {
         perform.run();
         if (waitTime > 0) finishAction(waitTime);
         else finishAction();
+    }
+
+    @Override
+    public String toString() {
+        return "Simple action";
     }
 }
