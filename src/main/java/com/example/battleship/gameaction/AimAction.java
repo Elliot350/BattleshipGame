@@ -12,20 +12,20 @@ public class AimAction extends PlayerGameAction {
     }
 
     public void takeShot(int col, int row) {
-        turnAction.addActionsToStart(
+        turnAction.addImmediateActions(
                 new MissileAnimation(player, col, row),
-                new RegisterHitAction(turnAction, player, col, row)
+                new RegisterHitAction(player.getOpponent(), col, row)
         );
-//        ActionManager.addImmediateGameActions(
-//                new MissileAnimation(player, col, row),
-//                player.getOpponent().registerHitAction(col, row)
-//                new RegisterHit(player.getOpponent(), col, row)
-//        );
         finishAction(100);
     }
 
     @Override
     public void perform() {
         player.startAiming(this);
+    }
+
+    @Override
+    public String toString() {
+        return player + " aim";
     }
 }

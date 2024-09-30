@@ -21,6 +21,8 @@ public class BattleshipGame {
         player2 = new BattleshipPlayer(this, gameDisplay);
         player1.setOpponent(player2);
         player2.setOpponent(player1);
+        player1.setName("Player 1");
+        player2.setName("Player 2");
 
         ActionManager.addGameActions(
                 new SetupPlayerAction(player1),
@@ -30,7 +32,8 @@ public class BattleshipGame {
                 new TurnAction(player1, gameDisplay)
         );
 
-        ActionManager.takeNextGameAction();
+        ActionManager.getCurrentAction().printActions();
+        ActionManager.getCurrentAction().startAction();
     }
 
     public void startGame() {

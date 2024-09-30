@@ -14,6 +14,7 @@ public class BattleshipPlayer extends Pane {
     private BattleshipPlayer opponent;
     private AimAction aimAction;
     private final GameDisplay gameDisplay;
+    private String name;
 
     public BattleshipPlayer(BattleshipGame game, GameDisplay gameDisplay) {
         relocate(5, 5);
@@ -29,6 +30,10 @@ public class BattleshipPlayer extends Pane {
         shipPlacer.relocate(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 5, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 15);
 
         getChildren().addAll(enemyBoard, playerBoard);
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
 
@@ -71,6 +76,10 @@ public class BattleshipPlayer extends Pane {
 
     public PlayerBoard getPlayerBoard() {
         return playerBoard;
+    }
+
+    public boolean isHit(int col, int row) {
+        return playerBoard.shipSegments.containsSomething(col, row);
     }
 
     public boolean receiveShot(int col, int row) {
@@ -125,4 +134,10 @@ public class BattleshipPlayer extends Pane {
 //            }
 //        };
 //    }
+
+
+    @Override
+    public String toString() {
+        return name;
+    }
 }

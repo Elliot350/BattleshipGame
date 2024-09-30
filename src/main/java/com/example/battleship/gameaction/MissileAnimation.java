@@ -11,7 +11,14 @@ import javafx.util.Duration;
 
 public class MissileAnimation extends AnimationAction {
 
+    private final BattleshipPlayer player;
+    private final int col;
+    private final int row;
+
     public MissileAnimation(BattleshipPlayer player, int col, int row) {
+        this.player = player;
+        this.col = col;
+        this.row = row;
         Rectangle rectangle = new Rectangle(5, 5);
         rectangle.relocate(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH / 2, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH);
         timeline = new Timeline(
@@ -28,5 +35,10 @@ public class MissileAnimation extends AnimationAction {
         );
         timeline.setOnFinished(event -> player.getChildren().remove(rectangle));
         length = timeline.getKeyFrames().getLast().getTime().toMillis();
+    }
+
+    @Override
+    public String toString() {
+        return "Missile animation to " + col + ", " + row + " on " + player;
     }
 }

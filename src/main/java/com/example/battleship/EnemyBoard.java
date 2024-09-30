@@ -2,6 +2,7 @@ package com.example.battleship;
 
 import javafx.scene.input.MouseEvent;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
 public class EnemyBoard extends Board {
 
@@ -13,6 +14,8 @@ public class EnemyBoard extends Board {
     public EnemyBoard(BattleshipPlayer player) {
         this.player = player;
         background = new Grid(BattleshipGame.BOARD_WIDTH, BattleshipGame.BOARD_WIDTH);
+        Rectangle backgroundRect = new Rectangle(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH, backgroundColour);
+        getChildren().add(backgroundRect);
         square = new PlacementIndicatorSquare();
         targeting = false;
         square.setVisible(false);

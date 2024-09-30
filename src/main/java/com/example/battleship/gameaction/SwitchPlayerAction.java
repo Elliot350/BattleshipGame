@@ -24,4 +24,9 @@ public class SwitchPlayerAction extends PlayerGameAction {
     public BattleshipPlayer getPlayer() {
         return player;
     }
+
+    @Override
+    public String toString() {
+        return "Switch from " + player.getOpponent() + " to " + player;
+    }
 }
