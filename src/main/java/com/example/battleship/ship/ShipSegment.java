@@ -7,8 +7,14 @@ import javafx.scene.paint.Color;
 public class ShipSegment extends GridItem {
     protected static final Color SHIP_COLOUR = Color.NAVY;
 
-    public void getShot() {
+    private boolean isShot = false;
 
+    public void getShot() {
+        isShot = true;
+    }
+
+    public boolean isShot() {
+        return isShot;
     }
 
     @Override

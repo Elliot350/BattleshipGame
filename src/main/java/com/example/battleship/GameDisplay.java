@@ -1,29 +1,30 @@
 package com.example.battleship;
 
-import com.example.battleship.gameaction.SwitchPlayerAction;
+import com.example.battleship.gameaction.WaitForConfirmationAction;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
-import javafx.scene.layout.VBox;
-
-import java.nio.Buffer;
+import javafx.scene.layout.StackPane;
 
 public class GameDisplay extends Pane {
 
     private static final boolean NEED_CONFIRMATION = true;
 
     private final Pane confirmScreen;
+    private final PlayerDoors confirmDoors;
     private Node current;
     private BattleshipPlayer targetPlayer;
-    private SwitchPlayerAction action;
+    private WaitForConfirmationAction action;
+    private final Button confirmButton;
 
     public GameDisplay() {
-        confirmScreen = new VBox();
-        Button confirmButton = new Button("Confirm");
-        confirmButton.setOnAction(event -> {
-            continueToPlayer();
-        });
-        confirmScreen.getChildren().add(confirmButton);
+        confirmButton = new Button("Confirm");
+        confirmButton.setOnAction(event -> continueToPlayer());
+
+        confirmDoors = new PlayerDoors();
+        confirmDoors.setOpen(false);
+
+        confirmScreen = new StackPane(confirmDoors, confirmButton);
     }
 
     public void setDisplay(Node node) {
@@ -32,10 +33,11 @@ public class GameDisplay extends Pane {
         current = node;
     }
 
-    public void takeAction(SwitchPlayerAction action) {
+    public void takeAction(WaitForConfirmationAction action) {
         this.action = action;
         targetPlayer = action.getPlayer();
         if (NEED_CONFIRMATION) {
+            confirmButton.setText("Continue to " + targetPlayer);
             setDisplay(confirmScreen);
         } else {
             continueToPlayer();

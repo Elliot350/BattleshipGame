@@ -3,9 +3,6 @@ package com.example.battleship.gameaction;
 import com.example.battleship.BattleshipPlayer;
 import com.example.battleship.GameDisplay;
 
-import java.util.ArrayList;
-import java.util.List;
-
 public class TurnAction extends GameAction {
 
     private final BattleshipPlayer player;
@@ -24,7 +21,7 @@ public class TurnAction extends GameAction {
         addActions(
                 new AimAction(player, this),
                 new WaitAction(1000),
-                new SwitchPlayerAction(gameDisplay, player.getOpponent())
+                new SwitchToPlayerAction(gameDisplay, player.getOpponent())
         );
         parent.addImmediateActions(nextTurn);
         startSubActions();

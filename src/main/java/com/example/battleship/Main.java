@@ -11,8 +11,8 @@ public class Main extends Application {
         GameDisplay gameDisplay = new GameDisplay();
         Scene scene = new Scene(gameDisplay, 600, 600);
 
-        BattleshipGame game = new BattleshipGame(gameDisplay);
-        game.startGame();
+        MainMenu mainMenu = new MainMenu(gameDisplay);
+        gameDisplay.setDisplay(mainMenu);
         stage.setTitle("Hello!");
         stage.setScene(scene);
         stage.show();

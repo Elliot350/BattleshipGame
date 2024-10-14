@@ -36,8 +36,8 @@ public class PlayerBoard extends Board {
 
         // Temp stuff
         placeShip(0, 0, 3, Direction.EAST);
-        placeShip(0, 3, 4, Direction.SOUTH);
-        placeShip(2, 2, 2, Direction.WEST);
+//        placeShip(0, 3, 4, Direction.SOUTH);
+//        placeShip(2, 2, 2, Direction.WEST);
 
 //        for (ShipSegment[] row : shipSegments) {
 //            System.out.println(Arrays.toString(row));

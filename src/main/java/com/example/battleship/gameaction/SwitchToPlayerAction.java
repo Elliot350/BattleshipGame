@@ -3,22 +3,23 @@ package com.example.battleship.gameaction;
 import com.example.battleship.BattleshipPlayer;
 import com.example.battleship.GameDisplay;
 
-public class SwitchPlayerAction extends PlayerGameAction {
+public class SwitchToPlayerAction extends PlayerGameAction {
 
     private GameDisplay gameDisplay;
 
-    public SwitchPlayerAction(GameDisplay gameDisplay, BattleshipPlayer player) {
+    public SwitchToPlayerAction(GameDisplay gameDisplay, BattleshipPlayer player) {
         super(player);
         this.gameDisplay = gameDisplay;
     }
 
-    public void continueToPlayer() {
-        finishAction();
-    }
-
     @Override
     public void perform() {
-        gameDisplay.takeAction(this);
+        addActions(
+                new AnimationAction(player.getOpponent().getDoors().getCloseTimeline()),
+                new WaitForConfirmationAction(gameDisplay, player),
+                new AnimationAction(player.getDoors().getOpenTimeline())
+        );
+        startSubActions();
     }
 
     public BattleshipPlayer getPlayer() {

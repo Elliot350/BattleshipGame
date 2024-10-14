@@ -15,6 +15,7 @@ public class BattleshipPlayer extends Pane {
     private AimAction aimAction;
     private final GameDisplay gameDisplay;
     private String name;
+    private final PlayerDoors doors;
 
     public BattleshipPlayer(BattleshipGame game, GameDisplay gameDisplay) {
         relocate(5, 5);
@@ -25,11 +26,14 @@ public class BattleshipPlayer extends Pane {
         playerBoard = new PlayerBoard();
         shipPlacer = new ShipPlacer(this);
 
+        doors = new PlayerDoors();
+
         enemyBoard.relocate(0, 0);
         playerBoard.relocate(0, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 15);
         shipPlacer.relocate(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 5, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 15);
 
         getChildren().addAll(enemyBoard, playerBoard);
+        getChildren().add(doors);
     }
 
     public void setName(String name) {
@@ -90,6 +94,26 @@ public class BattleshipPlayer extends Pane {
         } else {
             System.out.println(col + ", " + row + " was a miss");
         }
+        System.out.println(getSegmentsLeft() + " left");
+        if (getSegmentsLeft() == 0) {
+            System.out.println("All segments are shot!");
+        }
+    }
+
+    public int getSegmentsLeft() {
+        int count = 0;
+        for (int i = 0; i < playerBoard.getShipSegments().getCols(); i++) {
+            for (int j = 0; j < playerBoard.getShipSegments().getRows(); j++) {
+                if (playerBoard.getShipSegments().containsSomething(i, j) && !playerBoard.getShipSegments().get(i, j).isShot()) {
+                    count++;
+                }
+            }
+        }
+        return count;
+    }
+
+    public PlayerDoors getDoors() {
+        return doors;
     }
 
     @Override

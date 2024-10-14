@@ -1,7 +1,6 @@
 package com.example.battleship;
 
 import com.example.battleship.gameaction.*;
-import javafx.animation.Timeline;
 
 public class BattleshipGame {
 
@@ -15,20 +14,25 @@ public class BattleshipGame {
     private final BattleshipPlayer player2;
 
     public BattleshipGame(GameDisplay gameDisplay) {
+        this(gameDisplay, "Player 1", "Player 2");
+    }
+
+
+    public BattleshipGame(GameDisplay gameDisplay, String player1Name, String player2Name) {
         this.gameDisplay = gameDisplay;
 
         player1 = new BattleshipPlayer(this, gameDisplay);
         player2 = new BattleshipPlayer(this, gameDisplay);
         player1.setOpponent(player2);
         player2.setOpponent(player1);
-        player1.setName("Player 1");
-        player2.setName("Player 2");
+        player1.setName(player1Name);
+        player2.setName(player2Name);
 
         ActionManager.addGameActions(
                 new SetupPlayerAction(player1),
-                new SwitchPlayerAction(gameDisplay, player2),
+                new SwitchToPlayerAction(gameDisplay, player2),
                 new SetupPlayerAction(player2),
-                new SwitchPlayerAction(gameDisplay, player1),
+                new SwitchToPlayerAction(gameDisplay, player1),
                 new TurnAction(player1, gameDisplay)
         );
 

@@ -26,5 +26,6 @@ public class MiddleSegment extends ShipSegment {
     @Override
     public void getShot() {
         rectangle.setFill(Color.DARKGRAY);
+        super.getShot();
     }
 }

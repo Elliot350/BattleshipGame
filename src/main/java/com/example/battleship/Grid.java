@@ -35,4 +35,12 @@ public class Grid<T extends GridItem> {
     public boolean outsideGrid(int col, int row) {
         return col < 0 || col >= items.length || row < 0 || row >= items[0].length;
     }
+
+    public int getCols() {
+        return items.length;
+    }
+
+    public int getRows() {
+        return items[0].length;
+    }
 }
