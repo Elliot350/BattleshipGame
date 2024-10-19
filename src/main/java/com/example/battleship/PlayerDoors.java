@@ -103,24 +103,25 @@ public class PlayerDoors extends Pane {
     public Timeline getOpenTimeline() {
         return openTimeline;
     }
-}
 
-class Door extends Pane {
+    private static class Door extends Pane {
 
-    private final Rectangle doorPane;
-    private final Rectangle doorEdge;
+        private final Rectangle doorPane;
+        private final Rectangle doorEdge;
 
-    public Door() {
-        doorPane = new Rectangle(630, 315);
-        doorPane.setFill(Color.LIGHTGRAY);
-        doorPane.setStrokeWidth(0);
+        public Door() {
+            doorPane = new Rectangle(630, 315);
+            doorPane.setFill(Color.LIGHTGRAY);
+            doorPane.setStrokeWidth(0);
 
-        doorEdge = new Rectangle(630, 10);
-        doorEdge.setFill(Color.CYAN);
-        doorEdge.setStroke(Color.LIGHTCYAN);
-        doorEdge.setStrokeWidth(3);
-        doorEdge.relocate(0, 300);
+            doorEdge = new Rectangle(630, 10);
+            doorEdge.setFill(Color.CYAN);
+            doorEdge.setStroke(Color.LIGHTCYAN);
+            doorEdge.setStrokeWidth(3);
+            doorEdge.relocate(0, 300);
 
-        getChildren().addAll(doorPane, doorEdge);
+            getChildren().addAll(doorPane, doorEdge);
+        }
     }
 }
+
