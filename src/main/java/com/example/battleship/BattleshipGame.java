@@ -1,5 +1,7 @@
 package com.example.battleship;
 
+import com.example.battleship.coroutine.Coroutine;
+import com.example.battleship.coroutine.CoroutineThread;
 import com.example.battleship.gameaction.*;
 
 public class BattleshipGame {
@@ -36,8 +38,15 @@ public class BattleshipGame {
                 new TurnAction(player1, gameDisplay)
         );
 
-        ActionManager.getCurrentAction().printActions();
-        ActionManager.getCurrentAction().startAction();
+        Coroutine.createSetupCoroutine(player1).whenDone(
+                Coroutine.createSwitchPlayerCoroutine(gameDisplay, player1),
+                Coroutine.createSetupCoroutine(player2),
+                Coroutine.createSwitchPlayerCoroutine(gameDisplay, player2)
+        ).start();
+
+//        ActionManager.getCurrentAction().printActions();
+//        ActionManager.getCurrentAction().startAction();
+
     }
 
     public void startGame() {

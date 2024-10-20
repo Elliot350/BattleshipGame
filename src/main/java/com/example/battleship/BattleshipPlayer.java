@@ -6,21 +6,29 @@ import javafx.scene.layout.Pane;
 
 public class BattleshipPlayer extends Pane {
 
+    public enum PlayerState {
+        IDLE,
+        PLACING_SHIPS,
+        AIMING
+    }
+
     private final EnemyBoard enemyBoard;
     private final PlayerBoard playerBoard;
     private final ShipPlacer shipPlacer;
     private final BattleshipGame game;
-    private SetupPlayerAction playerAction;
+//    private SetupPlayerAction playerAction;
     private BattleshipPlayer opponent;
     private AimAction aimAction;
     private final GameDisplay gameDisplay;
     private String name;
     private final PlayerDoors doors;
+    private PlayerState state;
 
     public BattleshipPlayer(BattleshipGame game, GameDisplay gameDisplay) {
         relocate(5, 5);
         this.game = game;
         this.gameDisplay = gameDisplay;
+        state = PlayerState.IDLE;
 
         enemyBoard = new EnemyBoard(this);
         playerBoard = new PlayerBoard();
@@ -44,12 +52,14 @@ public class BattleshipPlayer extends Pane {
     public void donePlacingShips() {
         getChildren().remove(shipPlacer);
         game.donePlacingShips(this);
-        playerAction.donePlacingShips();
+        state = PlayerState.IDLE;
+
+//        playerAction.donePlacingShips();
     }
 
-    public void startPlacingShips(SetupPlayerAction source) {
-        playerAction = source;
+    public void startPlacingShips() {
         getChildren().add(shipPlacer);
+        state = PlayerState.PLACING_SHIPS;
     }
 
     public void startAiming(AimAction source) {
@@ -114,6 +124,14 @@ public class BattleshipPlayer extends Pane {
 
     public PlayerDoors getDoors() {
         return doors;
+    }
+
+    public void setState(PlayerState state) {
+        this.state = state;
+    }
+
+    public PlayerState getState() {
+        return state;
     }
 
     @Override

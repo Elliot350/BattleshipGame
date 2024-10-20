@@ -44,9 +44,27 @@ public class GameDisplay extends Pane {
         }
     }
 
+    public void switchToPlayer(BattleshipPlayer target) {
+        this.targetPlayer = target;
+        if (NEED_CONFIRMATION) {
+            confirmButton.setText("Continue to " + target);
+            setDisplay(confirmScreen);
+        } else {
+            continueToPlayer();
+        }
+    }
+
     public void continueToPlayer() {
         setDisplay(targetPlayer);
         targetPlayer = null;
-        action.continueToPlayer();
+//        action.continueToPlayer();
+    }
+
+    public Node getDisplay() {
+        return current;
+    }
+
+    public BattleshipPlayer getCurrentPlayer() {
+        return current instanceof BattleshipPlayer ? (BattleshipPlayer) current : null;
     }
 }

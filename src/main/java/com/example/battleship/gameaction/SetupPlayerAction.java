@@ -11,7 +11,7 @@ public class SetupPlayerAction extends PlayerGameAction {
 
     @Override
     public void perform() {
-        player.startPlacingShips(this);
+//        player.startPlacingShips(this);
     }
 
     public void donePlacingShips() {
