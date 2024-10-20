@@ -6,39 +6,47 @@ import com.example.battleship.GridItem;
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;
 import javafx.animation.Timeline;
-import javafx.scene.control.Dialog;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-public class ReceiveShotAction extends AnimationAction {
+public class ReceiveShotAction extends InstantAction {
 
     private final BattleshipPlayer player;
-    private final int col;
     private final int row;
+    private final int col;
 
     public ReceiveShotAction(BattleshipPlayer player, int col, int row) {
         this.player = player;
         this.col = col;
         this.row = row;
+    }
+
+    @Override
+    public void doAction() {
         Rectangle rectangle = new Rectangle(5, 5);
         rectangle.relocate(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH / 2, 0);
-        timeline = new Timeline(
+        Timeline timeline = new Timeline(
                 new KeyFrame(
                         Duration.ZERO,
                         event -> player.getPlayerBoard().getChildren().add(rectangle)
                 ),
                 new KeyFrame(
                         Duration.millis(1000),
+                        event -> player.getPlayerBoard().getChildren().remove(rectangle),
                         new KeyValue(rectangle.layoutXProperty(), GridItem.convertX(col)),
                         new KeyValue(rectangle.layoutYProperty(), GridItem.convertY(row))
                 )
         );
-        timeline.setOnFinished(event -> player.getPlayerBoard().getChildren().remove(rectangle));
-        length = timeline.getKeyFrames().getLast().getTime().toMillis();
-    }
-
-    @Override
-    public String toString() {
-        return "Receive shot at " + col + ", " + row + " on " + player;
+        GameManager.addToStart(
+                new WaitAction(1000),
+                new AnimationAction(timeline),
+                new SimpleGameAction(() -> {
+                    if (player.isHit(col, row)) {
+                        player.getPlayerBoard().placeHit(col, row);
+                    } else {
+                        player.getPlayerBoard().placeMiss(col, row);
+                    }
+                })
+        );
     }
 }

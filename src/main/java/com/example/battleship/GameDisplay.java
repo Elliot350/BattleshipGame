@@ -1,6 +1,5 @@
 package com.example.battleship;
 
-import com.example.battleship.gameaction.WaitForConfirmationAction;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.layout.Pane;
@@ -14,7 +13,6 @@ public class GameDisplay extends Pane {
     private final PlayerDoors confirmDoors;
     private Node current;
     private BattleshipPlayer targetPlayer;
-    private WaitForConfirmationAction action;
     private final Button confirmButton;
 
     public GameDisplay() {
@@ -33,9 +31,8 @@ public class GameDisplay extends Pane {
         current = node;
     }
 
-    public void takeAction(WaitForConfirmationAction action) {
-        this.action = action;
-        targetPlayer = action.getPlayer();
+    public void switchPlayerTo(BattleshipPlayer targetPlayer) {
+        this.targetPlayer = targetPlayer;
         if (NEED_CONFIRMATION) {
             confirmButton.setText("Continue to " + targetPlayer);
             setDisplay(confirmScreen);
@@ -47,6 +44,10 @@ public class GameDisplay extends Pane {
     public void continueToPlayer() {
         setDisplay(targetPlayer);
         targetPlayer = null;
-        action.continueToPlayer();
+//        action.continueToPlayer();
+    }
+
+    public BattleshipPlayer getPlayer() {
+        return current instanceof BattleshipPlayer ? (BattleshipPlayer) current : null;
     }
 }

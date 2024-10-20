@@ -9,36 +9,25 @@ import javafx.animation.Timeline;
 import javafx.scene.shape.Rectangle;
 import javafx.util.Duration;
 
-public class MissileAnimation extends AnimationAction {
-
-    private final BattleshipPlayer player;
-    private final int col;
-    private final int row;
-
-    public MissileAnimation(BattleshipPlayer player, int col, int row) {
-        this.player = player;
-        this.col = col;
-        this.row = row;
+public class MissileAnimationAction extends AnimationAction {
+    public MissileAnimationAction(BattleshipPlayer player, int col, int row) {
         Rectangle rectangle = new Rectangle(5, 5);
         rectangle.relocate(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH / 2, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH);
-        timeline = new Timeline(
+        Timeline timeline = new Timeline(
                 new KeyFrame(
                         Duration.ZERO,
-                        // TODO: Add this to enemy board, not player
                         event -> player.getChildren().add(rectangle)
                 ),
                 new KeyFrame(
                         Duration.millis(1000),
+                        event -> player.getChildren().remove(rectangle),
                         new KeyValue(rectangle.layoutXProperty(), GridItem.convertX(col)),
                         new KeyValue(rectangle.layoutYProperty(), GridItem.convertY(row))
                 )
         );
-        timeline.setOnFinished(event -> player.getChildren().remove(rectangle));
-        length = timeline.getKeyFrames().getLast().getTime().toMillis();
-    }
-
-    @Override
-    public String toString() {
-        return "Missile animation to " + col + ", " + row + " on " + player;
+//        timeline.onFinishedProperty().addListener((observable, oldValue, newValue) -> {
+//            player.getChildren().remove(rectangle);
+//        });
+        setTimeline(timeline);
     }
 }

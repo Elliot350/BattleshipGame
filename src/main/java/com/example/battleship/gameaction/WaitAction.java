@@ -1,27 +1,31 @@
 package com.example.battleship.gameaction;
 
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.util.Duration;
+
 public class WaitAction extends GameAction {
-    public WaitAction(double waitTime) {
-        this.waitTime = waitTime;
+
+    private boolean done;
+    private final Timeline timeline;
+
+    public WaitAction(double time) {
+        done = false;
+        timeline = new Timeline(
+                new KeyFrame(
+                        Duration.millis(time),
+                        event -> done = true
+                )
+        );
     }
 
     @Override
-    public void addActions(GameAction... actions) {
-        System.out.println("Actions were attempted to be added to a wait!");
+    public void doAction() {
+        timeline.play();
     }
 
     @Override
-    public void addImmediateActions(GameAction... actions) {
-        System.out.println("Actions were attempted to be added to a wait!");
-    }
-
-    @Override
-    public void perform() {
-        finishAction(waitTime);
-    }
-
-    @Override
-    public String toString() {
-        return "Wait for " + waitTime + "ms";
+    public boolean done() {
+        return done;
     }
 }

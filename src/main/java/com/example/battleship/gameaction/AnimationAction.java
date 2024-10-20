@@ -1,31 +1,40 @@
 package com.example.battleship.gameaction;
 
+import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
+import javafx.util.Duration;
 
 public class AnimationAction extends GameAction {
 
-    protected Timeline timeline;
-    protected double length;
+    private boolean done;
+    private Timeline timeline;
 
-    public AnimationAction() {}
+    public AnimationAction() {
+        done = false;
+    }
 
     public AnimationAction(Timeline timeline) {
-        this(timeline, timeline.getKeyFrames().getLast().getTime().toMillis());
+        done = false;
+        setTimeline(timeline);
     }
 
-    public AnimationAction(Timeline timeline, double length) {
+    protected void setTimeline(Timeline timeline) {
         this.timeline = timeline;
-        this.length = length;
+        this.timeline.setOnFinished(event -> done = true);
+//        double lastKeyFrame = timeline.getKeyFrames().getLast().getTime().toMillis();
+//        this.timeline.getKeyFrames().add(new KeyFrame(
+//                Duration.millis(lastKeyFrame + 1),
+//                event -> done = true
+//        ));
     }
 
     @Override
-    public void perform() {
+    public void doAction() {
         timeline.play();
-        finishAction(length);
     }
 
     @Override
-    public String toString() {
-        return "Animation";
+    public boolean done() {
+        return done;
     }
 }

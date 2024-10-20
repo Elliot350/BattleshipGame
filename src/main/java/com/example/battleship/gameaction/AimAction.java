@@ -1,31 +1,24 @@
 package com.example.battleship.gameaction;
 
 import com.example.battleship.BattleshipPlayer;
+import com.example.battleship.GameDisplay;
 
-public class AimAction extends PlayerGameAction {
+public class AimAction extends InstantAction {
 
-    private TurnAction turnAction;
+    private final GameDisplay display;
+    private final BattleshipPlayer player;
 
-    public AimAction(BattleshipPlayer player, TurnAction turnAction) {
-        super(player);
-        this.turnAction = turnAction;
+    public AimAction(GameDisplay display, BattleshipPlayer player) {
+        this.display = display;
+        this.player = player;
     }
 
-    public void takeShot(int col, int row) {
-        turnAction.addImmediateActions(
-                new MissileAnimation(player, col, row),
-                new RegisterHitAction(player.getOpponent(), col, row)
+    @Override
+    public void doAction() {
+        player.startAiming();
+        GameManager.addToStart(
+                new WaitUntilAction(() -> player.getState() == BattleshipPlayer.PlayerState.IDLE),
+                new ShootAction(display, player)
         );
-        finishAction(100);
-    }
-
-    @Override
-    public void perform() {
-        player.startAiming(this);
-    }
-
-    @Override
-    public String toString() {
-        return player + " aim";
     }
 }

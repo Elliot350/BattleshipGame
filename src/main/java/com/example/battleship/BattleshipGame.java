@@ -28,28 +28,18 @@ public class BattleshipGame {
         player1.setName(player1Name);
         player2.setName(player2Name);
 
-        ActionManager.addGameActions(
+        GameManager.addActions(
                 new SetupPlayerAction(player1),
-                new SwitchToPlayerAction(gameDisplay, player2),
+                new SimpleGameAction(() -> System.out.println("Done placing")),
+                new SwitchPlayerAction(gameDisplay, player1),
                 new SetupPlayerAction(player2),
-                new SwitchToPlayerAction(gameDisplay, player1),
-                new TurnAction(player1, gameDisplay)
+                new SwitchPlayerAction(gameDisplay, player2),
+                new AimAction(gameDisplay, player1)
         );
-
-        ActionManager.getCurrentAction().printActions();
-        ActionManager.getCurrentAction().startAction();
+        GameManager.startActions();
     }
 
     public void startGame() {
         gameDisplay.setDisplay(player1);
-    }
-
-    public void donePlacingShips(BattleshipPlayer player) {
-//        if (player == player1) {
-//            gameDisplay.switchToPlayer(player2);
-//        } else {
-//            gameDisplay.switchToPlayer(player1);
-//            player1.takeShot();
-//        }
     }
 }
