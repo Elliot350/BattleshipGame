@@ -1,26 +1,35 @@
 package com.example.battleship;
 
-import com.example.battleship.gameaction.*;
+import com.example.battleship.gameaction.GameManager;
+import com.example.battleship.gameaction.PlayerWinAction;
 import com.example.battleship.ship.ShipSegment;
 import javafx.scene.layout.Pane;
 
 public class BattleshipPlayer extends Pane {
 
+    public enum PlayerState {
+        IDLE,
+        PLACING_SHIPS,
+        AIMING
+    }
+
     private final EnemyBoard enemyBoard;
     private final PlayerBoard playerBoard;
     private final ShipPlacer shipPlacer;
     private final BattleshipGame game;
-    private SetupPlayerAction playerAction;
     private BattleshipPlayer opponent;
-    private AimAction aimAction;
     private final GameDisplay gameDisplay;
     private String name;
     private final PlayerDoors doors;
+    private PlayerState state;
+    private int aimRow;
+    private int aimCol;
 
     public BattleshipPlayer(BattleshipGame game, GameDisplay gameDisplay) {
         relocate(5, 5);
         this.game = game;
         this.gameDisplay = gameDisplay;
+        state = PlayerState.IDLE;
 
         enemyBoard = new EnemyBoard(this);
         playerBoard = new PlayerBoard();
@@ -42,28 +51,24 @@ public class BattleshipPlayer extends Pane {
 
 
     public void donePlacingShips() {
+        state = PlayerState.IDLE;
         getChildren().remove(shipPlacer);
-        game.donePlacingShips(this);
-        playerAction.donePlacingShips();
     }
 
-    public void startPlacingShips(SetupPlayerAction source) {
-        playerAction = source;
+    public void startPlacingShips() {
+        state = PlayerState.PLACING_SHIPS;
         getChildren().add(shipPlacer);
     }
 
-    public void startAiming(AimAction source) {
-        aimAction = source;
+    public void startAiming() {
+        state = PlayerState.AIMING;
         enemyBoard.startTargeting();
     }
 
     public void shootAt(int col, int row) {
-//        if (game.shootAt(col, row, this)) {
-//            enemyBoard.placeHit(col, row);
-//        } else {
-//            enemyBoard.placeMiss(col, row);
-//        }
-        aimAction.takeShot(col, row);
+        state = PlayerState.IDLE;
+        aimCol = col;
+        aimRow = row;
     }
 
     public void setOpponent(BattleshipPlayer opponent) {
@@ -97,6 +102,10 @@ public class BattleshipPlayer extends Pane {
         System.out.println(getSegmentsLeft() + " left");
         if (getSegmentsLeft() == 0) {
             System.out.println("All segments are shot!");
+            GameManager.clearActions();
+            GameManager.addToStart(
+                    new PlayerWinAction(gameDisplay, opponent)
+            );
         }
     }
 
@@ -114,6 +123,23 @@ public class BattleshipPlayer extends Pane {
 
     public PlayerDoors getDoors() {
         return doors;
+    }
+
+    public PlayerState getState() {
+        return state;
+    }
+
+    public int getAimRow() {
+        return aimRow;
+    }
+
+    public int getAimCol() {
+        return aimCol;
+    }
+
+    public void resetAimVars() {
+        aimCol = -1;
+        aimRow = -1;
     }
 
     @Override

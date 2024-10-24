@@ -30,6 +30,10 @@ public class PlayerDoors extends Pane {
     private final Timeline openTimeline;
 
     public PlayerDoors() {
+        this(true);
+    }
+
+    public PlayerDoors(boolean open) {
 
         topDoor = new Door();
         bottomDoor = new Door();
@@ -80,6 +84,7 @@ public class PlayerDoors extends Pane {
         );
 
         getChildren().addAll(topDoor, bottomDoor);
+        setOpen(open);
     }
 
     public void setOpen(boolean open) {

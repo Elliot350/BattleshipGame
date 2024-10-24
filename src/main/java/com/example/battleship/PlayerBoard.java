@@ -35,7 +35,7 @@ public class PlayerBoard extends Board {
         }
 
         // Temp stuff
-        placeShip(0, 0, 3, Direction.EAST);
+//        placeShip(0, 0, 3, Direction.EAST);
 //        placeShip(0, 3, 4, Direction.SOUTH);
 //        placeShip(2, 2, 2, Direction.WEST);
 
@@ -89,6 +89,7 @@ public class PlayerBoard extends Board {
         getChildren().add(new HitIndicator(col, row));
     }
 
+    // TODO: Is this doing anything???
     public void handleMouseClick(MouseEvent event) {
         int xPos = (int) (event.getSceneX() / BattleshipGame.CELL_WIDTH);
         int yPos = (int) ((event.getSceneY() - getLayoutY()) / BattleshipGame.CELL_WIDTH);

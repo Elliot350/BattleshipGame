@@ -2,24 +2,19 @@ package com.example.battleship.gameaction;
 
 import com.example.battleship.BattleshipPlayer;
 
-public class SetupPlayerAction extends PlayerGameAction {
+public class SetupPlayerAction extends InstantAction {
+
+    private final BattleshipPlayer player;
 
     public SetupPlayerAction(BattleshipPlayer player) {
-        super(player);
-        waitTime = 1000;
+        this.player = player;
     }
 
     @Override
-    public void perform() {
-        player.startPlacingShips(this);
-    }
-
-    public void donePlacingShips() {
-        startSubActions();
-    }
-
-    @Override
-    public String toString() {
-        return "Setup " + player;
+    public void doAction() {
+        GameManager.addToStart(
+                new SimpleGameAction(player::startPlacingShips),
+                new WaitUntilAction(() -> player.getState() == BattleshipPlayer.PlayerState.IDLE)
+        );
     }
 }
