@@ -1,6 +1,7 @@
 package com.example.battleship;
 
 import com.example.battleship.gameaction.*;
+import javafx.stage.Stage;
 
 public class BattleshipGame {
 

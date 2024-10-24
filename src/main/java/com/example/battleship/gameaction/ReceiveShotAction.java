@@ -46,6 +46,7 @@ public class ReceiveShotAction extends InstantAction {
                     } else {
                         player.getPlayerBoard().placeMiss(col, row);
                     }
+                    player.receiveShot(col, row);
                 })
         );
     }

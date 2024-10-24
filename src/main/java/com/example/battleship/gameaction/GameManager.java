@@ -59,6 +59,10 @@ public class GameManager {
         currentAction.doAction();
     }
 
+    public static void clearActions() {
+        actions.clear();
+    }
+
     public static boolean contains(GameAction action) {
         return actions.contains(action);
     }

@@ -21,7 +21,7 @@ public class RegisterShotAction extends InstantAction {
 
     @Override
     public void doAction() {
-        boolean hit = player.isHit(col, row);
+        boolean hit = player.getOpponent().isHit(col, row);
         if (hit) {
             player.getEnemyBoard().placeHit(col, row);
         } else {

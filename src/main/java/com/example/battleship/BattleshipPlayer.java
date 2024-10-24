@@ -1,5 +1,7 @@
 package com.example.battleship;
 
+import com.example.battleship.gameaction.GameManager;
+import com.example.battleship.gameaction.PlayerWinAction;
 import com.example.battleship.ship.ShipSegment;
 import javafx.scene.layout.Pane;
 
@@ -51,7 +53,6 @@ public class BattleshipPlayer extends Pane {
     public void donePlacingShips() {
         state = PlayerState.IDLE;
         getChildren().remove(shipPlacer);
-//        playerAction.donePlacingShips();
     }
 
     public void startPlacingShips() {
@@ -60,18 +61,11 @@ public class BattleshipPlayer extends Pane {
     }
 
     public void startAiming() {
-//        aimAction = source;
         state = PlayerState.AIMING;
         enemyBoard.startTargeting();
     }
 
     public void shootAt(int col, int row) {
-//        if (game.shootAt(col, row, this)) {
-//            enemyBoard.placeHit(col, row);
-//        } else {
-//            enemyBoard.placeMiss(col, row);
-//        }
-//        aimAction.takeShot(col, row);
         state = PlayerState.IDLE;
         aimCol = col;
         aimRow = row;
@@ -108,6 +102,10 @@ public class BattleshipPlayer extends Pane {
         System.out.println(getSegmentsLeft() + " left");
         if (getSegmentsLeft() == 0) {
             System.out.println("All segments are shot!");
+            GameManager.clearActions();
+            GameManager.addToStart(
+                    new PlayerWinAction(gameDisplay, opponent)
+            );
         }
     }
 
