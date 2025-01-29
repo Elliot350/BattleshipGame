@@ -2,6 +2,7 @@ package com.example.battleship;
 
 import com.example.battleship.ship.Ship;
 import com.example.battleship.ship.ShipSegment;
+import javafx.geometry.Bounds;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -18,14 +19,14 @@ public class PlayerBoard extends Board {
     private final List<CellClicked> toRemove;
 
     public PlayerBoard() {
-        setBorder(new Border(
-                new BorderStroke(
-                        Color.BLACK,
-                        BorderStrokeStyle.SOLID,
-                        CornerRadii.EMPTY,
-                        new BorderWidths(10)
-                )
-        ));
+//        setBorder(new Border(
+//                new BorderStroke(
+//                        Color.BLACK,
+//                        BorderStrokeStyle.SOLID,
+//                        CornerRadii.EMPTY,
+//                        new BorderWidths(10)
+//                )
+//        ));
 
 
         actions = new ArrayList<>();
@@ -103,9 +104,16 @@ public class PlayerBoard extends Board {
     }
 
     // TODO: Is this doing anything???
+    // It's not really, using it for debugging right now
     public void handleMouseClick(MouseEvent event) {
-        int xPos = (int) (event.getSceneX() / BattleshipGame.CELL_WIDTH);
-        int yPos = (int) ((event.getSceneY() - getLayoutY()) / BattleshipGame.CELL_WIDTH);
+
+//        System.out.println("Parent: " + getBoundsInParent());
+//        System.out.println("Local: " + getBoundsInLocal());
+
+        int xPos = (int) ((event.getSceneX() - getBoundsInParent().getMinX()) / BattleshipGame.CELL_WIDTH);
+        int yPos = (int) ((event.getSceneY() - getBoundsInParent().getMinY()) / BattleshipGame.CELL_WIDTH);
+
+        System.out.println("Clicked at " + xPos + ", " + yPos);
         for (CellClicked action : actions) {
             action.accept(yPos, xPos);
         }

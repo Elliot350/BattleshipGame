@@ -57,6 +57,6 @@ public class GridItem extends Pane {
     }
 
     public static int getRow(MouseEvent event, Node node) {
-        return (int) ((event.getSceneY() - node.getBoundsInParent().getMaxY()) / BattleshipGame.CELL_WIDTH);
+        return (int) ((event.getSceneY() - node.getBoundsInParent().getMinY()) / BattleshipGame.CELL_WIDTH);
     }
 }

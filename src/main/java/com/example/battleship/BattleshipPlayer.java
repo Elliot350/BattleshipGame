@@ -63,6 +63,16 @@ public class BattleshipPlayer extends StackPane {
 
 //        vBox.getChildren().addAll(enemyBoard, playerBoard);
         Pane pane = new Pane();
+//        vBox.setBorder(
+//                new Border(
+//                        new BorderStroke(
+//                                Color.RED,
+//                                BorderStrokeStyle.SOLID,
+//                                CornerRadii.EMPTY,
+//                                BorderWidths.DEFAULT
+//                        )
+//                )
+//        );
 //        pane.setBorder(
 //                new Border(
 //                        new BorderStroke(
@@ -73,13 +83,20 @@ public class BattleshipPlayer extends StackPane {
 //                        )
 //                )
 //        );
-        pane.getChildren().add(playerBoard);
-        playerBoard.layoutXProperty().bind(
-                pane.widthProperty().divide(2).subtract(playerBoard.widthProperty().divide(2))
-        );
+//        pane.getChildren().add(playerBoard);
+//        playerBoard.layoutXProperty().bind(
+//                pane.widthProperty().divide(2).subtract(playerBoard.widthProperty().divide(2))
+//        );
+//        playerBoard.layoutYProperty().bind(
+//                pane.heightProperty().divide(2).subtract(playerBoard.widthProperty().divide(2))
+//        );
 //        pane.getChildren().add(new Rectangle(150, 150, Color.GREEN));
 
-        vBox.getChildren().add(pane);
+//        StackPane tmp = new StackPane();
+//        tmp.getChildren().add(playerBoard);
+
+//        vBox.getChildren().add(tmp);
+        vBox.getChildren().add(playerBoard);
 
         getChildren().add(vBox);
 //        getChildren().add(doors);

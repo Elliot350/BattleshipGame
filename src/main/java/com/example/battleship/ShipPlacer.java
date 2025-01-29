@@ -203,6 +203,7 @@ public class ShipPlacer extends VBox {
      */
     private void movePlacementIndicator(MouseEvent event) {
         if (shipPlacement != null) {
+
             int col = GridItem.getCol(event, board);
             int row = GridItem.getRow(event, board);
 
