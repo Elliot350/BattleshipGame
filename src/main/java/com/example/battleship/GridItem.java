@@ -1,6 +1,8 @@
 package com.example.battleship;
 
 import javafx.scene.Group;
+import javafx.scene.Node;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Pane;
 
 import java.util.ArrayList;
@@ -43,12 +45,18 @@ public class GridItem extends Pane {
     }
 
     public static double convertX(int col) {
-        // Accounting for the grid overlapping
-        return col * (BattleshipGame.CELL_WIDTH) - 1;
+        return col * (BattleshipGame.CELL_WIDTH);
     }
 
     public static double convertY(int row) {
-        // Accounting for the grid overlapping
-        return row * (BattleshipGame.CELL_WIDTH) - 1;
+        return row * (BattleshipGame.CELL_WIDTH);
+    }
+
+    public static int getCol(MouseEvent event, Node node) {
+        return (int) ((event.getSceneX() - node.getBoundsInParent().getMinX()) / BattleshipGame.CELL_WIDTH);
+    }
+
+    public static int getRow(MouseEvent event, Node node) {
+        return (int) ((event.getSceneY() - node.getBoundsInParent().getMaxY()) / BattleshipGame.CELL_WIDTH);
     }
 }

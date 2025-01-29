@@ -127,7 +127,7 @@ public class ShipPlacer extends VBox {
         shipPlacement.remove();
         shipPlacement = null;
 
-        if (!hasShipsLeft()) finish();
+        if (!hasShipsLeftToPlace()) finish();
     }
 
     /**
@@ -145,8 +145,8 @@ public class ShipPlacer extends VBox {
         mousePressedHandler = event -> {
             if (event.isPrimaryButtonDown()) {
                 if (mode == Mode.PLACING_SHIP) {
-                    int col = (int) (event.getSceneX() / BattleshipGame.CELL_WIDTH);
-                    int row = (int) ((event.getSceneY() - board.getLayoutY()) / BattleshipGame.CELL_WIDTH);
+                    int col = GridItem.getCol(event, board);
+                    int row = GridItem.getRow(event, board);
                     if (board.canPlaceShip(col, row, shipPlacement.getLength(), shipPlacement.getDirection())) {
                         placeShip(col, row, shipPlacement.getLength(), shipPlacement.getDirection());
                     }
@@ -203,8 +203,8 @@ public class ShipPlacer extends VBox {
      */
     private void movePlacementIndicator(MouseEvent event) {
         if (shipPlacement != null) {
-            int col = (int) (event.getSceneX() / BattleshipGame.CELL_WIDTH);
-            int row = (int) ((event.getSceneY() - board.getLayoutY()) / BattleshipGame.CELL_WIDTH);
+            int col = GridItem.getCol(event, board);
+            int row = GridItem.getRow(event, board);
 
             shipPlacement.getPlacementIndicator().moveTo(col, row, shipPlacement.getDirection());
         }
@@ -215,7 +215,7 @@ public class ShipPlacer extends VBox {
      *
      * @return true if there is a number above 0 in {@link #shipsToPlace}
      */
-    private boolean hasShipsLeft() {
+    private boolean hasShipsLeftToPlace() {
         for (Integer i : shipsToPlace) {
             if (i > 0) return true;
         }

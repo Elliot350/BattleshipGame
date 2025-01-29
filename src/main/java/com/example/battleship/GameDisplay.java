@@ -1,5 +1,7 @@
 package com.example.battleship;
 
+import com.example.battleship.menu.PlayerDoors;
+import javafx.geometry.Pos;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -8,7 +10,7 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
-public class GameDisplay extends Pane {
+public class GameDisplay extends StackPane {
 
     private static final boolean NEED_CONFIRMATION = true;
 
@@ -57,7 +59,6 @@ public class GameDisplay extends Pane {
     public void continueToPlayer() {
         setDisplay(targetPlayer);
         targetPlayer = null;
-//        action.continueToPlayer();
     }
 
     public BattleshipPlayer getPlayer() {

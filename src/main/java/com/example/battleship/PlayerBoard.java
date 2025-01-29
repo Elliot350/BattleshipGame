@@ -3,6 +3,7 @@ package com.example.battleship;
 import com.example.battleship.ship.Ship;
 import com.example.battleship.ship.ShipSegment;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
 
@@ -11,21 +12,35 @@ import java.util.List;
 
 public class PlayerBoard extends Board {
 
-    private Grid<BoardSquare> background;
+    private final Grid<BoardSquare> background;
     private final Grid<ShipSegment> shipSegments;
     private final List<CellClicked> actions;
     private final List<CellClicked> toRemove;
 
     public PlayerBoard() {
+        setBorder(new Border(
+                new BorderStroke(
+                        Color.BLACK,
+                        BorderStrokeStyle.SOLID,
+                        CornerRadii.EMPTY,
+                        new BorderWidths(10)
+                )
+        ));
+
+
         actions = new ArrayList<>();
         toRemove = new ArrayList<>();
 
         Rectangle backgroundRect = new Rectangle(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH, backgroundColour);
+//        backgroundRect.layoutXProperty().bind(
+//                widthProperty().divide(2).subtract(backgroundRect.widthProperty().divide(2))
+//        );
         getChildren().add(backgroundRect);
 
         background = new Grid<>(BattleshipGame.BOARD_WIDTH, BattleshipGame.BOARD_WIDTH, BoardSquare.class);
         shipSegments = new Grid<>(BattleshipGame.BOARD_WIDTH, BattleshipGame.BOARD_WIDTH, ShipSegment.class);
 
+//        Pane grid = new Pane();
         for (int i = 0; i < BattleshipGame.BOARD_WIDTH; i++) {
             for (int j = 0; j < BattleshipGame.BOARD_WIDTH; j++) {
                 BoardSquare square = new BoardSquare(i, j, Color.BLACK);
@@ -33,16 +48,14 @@ public class PlayerBoard extends Board {
                 getChildren().add(square);
             }
         }
+//        grid.layoutXProperty().bind(
+//                widthProperty().divide(2).subtract(backgroundRect.widthProperty().divide(2))
+//        );
+//        getChildren().add(grid);
 
-        // Temp stuff
-//        placeShip(0, 0, 3, Direction.EAST);
-//        placeShip(0, 3, 4, Direction.SOUTH);
-//        placeShip(2, 2, 2, Direction.WEST);
 
-//        for (ShipSegment[] row : shipSegments) {
-//            System.out.println(Arrays.toString(row));
-//        }
-
+        setPrefHeight(BattleshipGame.BOARD_WIDTH * BattleshipGame.CELL_WIDTH);
+        setPrefWidth(BattleshipGame.BOARD_WIDTH * BattleshipGame.CELL_WIDTH);
         setOnMouseClicked(this::handleMouseClick);
     }
 

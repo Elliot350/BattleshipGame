@@ -2,10 +2,14 @@ package com.example.battleship;
 
 import com.example.battleship.gameaction.GameManager;
 import com.example.battleship.gameaction.PlayerWinAction;
+import com.example.battleship.menu.PlayerDoors;
 import com.example.battleship.ship.ShipSegment;
-import javafx.scene.layout.Pane;
+import javafx.geometry.Pos;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 
-public class BattleshipPlayer extends Pane {
+public class BattleshipPlayer extends StackPane {
 
     public enum PlayerState {
         IDLE,
@@ -22,14 +26,25 @@ public class BattleshipPlayer extends Pane {
     private String name;
     private final PlayerDoors doors;
     private PlayerState state;
+    private final VBox vBox;
     private int aimRow;
     private int aimCol;
 
     public BattleshipPlayer(BattleshipGame game, GameDisplay gameDisplay) {
+//        setBorder(new Border(
+//                new BorderStroke(
+//                        Color.RED,
+//                        BorderStrokeStyle.SOLID,
+//                        CornerRadii.EMPTY,
+//                        new BorderWidths(10)
+//                )
+//            )
+//        );
         relocate(5, 5);
         this.game = game;
         this.gameDisplay = gameDisplay;
         state = PlayerState.IDLE;
+        setAlignment(Pos.CENTER);
 
         enemyBoard = new EnemyBoard(this);
         playerBoard = new PlayerBoard();
@@ -37,12 +52,37 @@ public class BattleshipPlayer extends Pane {
 
         doors = new PlayerDoors();
 
-        enemyBoard.relocate(0, 0);
-        playerBoard.relocate(0, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 15);
-        shipPlacer.relocate(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 5, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 15);
+//        enemyBoard.relocate(0, 0);
+//        playerBoard.relocate(0, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 15);
+//        shipPlacer.relocate(BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 5, BattleshipGame.CELL_WIDTH * BattleshipGame.BOARD_WIDTH + 15);
 
-        getChildren().addAll(enemyBoard, playerBoard);
-        getChildren().add(doors);
+        vBox = new VBox();
+        vBox.setAlignment(Pos.CENTER);
+
+
+
+//        vBox.getChildren().addAll(enemyBoard, playerBoard);
+        Pane pane = new Pane();
+//        pane.setBorder(
+//                new Border(
+//                        new BorderStroke(
+//                                Color.LIGHTGREEN,
+//                                BorderStrokeStyle.SOLID,
+//                                CornerRadii.EMPTY,
+//                                BorderWidths.DEFAULT
+//                        )
+//                )
+//        );
+        pane.getChildren().add(playerBoard);
+        playerBoard.layoutXProperty().bind(
+                pane.widthProperty().divide(2).subtract(playerBoard.widthProperty().divide(2))
+        );
+//        pane.getChildren().add(new Rectangle(150, 150, Color.GREEN));
+
+        vBox.getChildren().add(pane);
+
+        getChildren().add(vBox);
+//        getChildren().add(doors);
     }
 
     public void setName(String name) {
@@ -52,12 +92,12 @@ public class BattleshipPlayer extends Pane {
 
     public void donePlacingShips() {
         state = PlayerState.IDLE;
-        getChildren().remove(shipPlacer);
+        vBox.getChildren().remove(shipPlacer);
     }
 
     public void startPlacingShips() {
         state = PlayerState.PLACING_SHIPS;
-        getChildren().add(shipPlacer);
+        vBox.getChildren().add(shipPlacer);
     }
 
     public void startAiming() {

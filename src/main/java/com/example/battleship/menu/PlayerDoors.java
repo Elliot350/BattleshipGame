@@ -1,4 +1,4 @@
-package com.example.battleship;
+package com.example.battleship.menu;
 
 import javafx.animation.KeyFrame;
 import javafx.animation.KeyValue;

@@ -1,6 +1,7 @@
 package com.example.battleship;
 
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 
 public abstract class Board extends Pane {
